@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'transaction.dart';
-import 'package:intl/intl.dart';
+import 'package:mad_deutch_4_bablo/widgets/new_transaction.dart';
+import 'package:mad_deutch_4_bablo/widgets/transaction_list.dart';
+import 'models/transaction.dart';
+import 'widgets/user_transactions.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,20 +17,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'new shoes',
-      amount: 4000.0,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'order sushi',
-      amount: 1238.0,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> transactions = [];
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   String titleInput;
   String amountInput;
@@ -40,81 +31,7 @@ class MyHomePage extends StatelessWidget {
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              child: Text('CHART!!!'),
-            ),
-            Card(
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
-                      onChanged: (val) {
-                        titleInput = val;
-                        // ToDO add text controllers (end of lesson 88)
-                      },
-                    ),
-                    TextField(
-                        decoration: InputDecoration(labelText: 'Amount'),
-                        onChanged: (val) {
-                          amountInput = val;
-                          // ToDO add text controllers (end of lesson 88)
-                        }),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Add Transaction'),
-                      style: TextButton.styleFrom(
-                        primary: Colors.blue,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Card(
-                child: Column(
-              children: transactions
-                  .map(
-                    (tx) => Card(
-                        child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          margin: EdgeInsets.all(8.0),
-                          child: Text(
-                            '${tx.amount} Р',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20.0),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            color: Colors.lightBlue,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              tx.title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16.0),
-                            ),
-                            Text(
-                              DateFormat.yMMMd().format(tx.date),
-                              style:
-                                  TextStyle(fontSize: 12.0, color: Colors.grey),
-                            ),
-                          ],
-                        )
-                      ],
-                    )),
-                  )
-                  .toList(),
-            )),
-          ],
+          children: <Widget>[UserTransactions()],
         ));
   }
 }
